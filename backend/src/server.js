@@ -2,6 +2,7 @@
 import express from "express"
 import dotenv from "dotenv"
 import { connectDB } from "./config/database.js"
+import authRouter from "./auth/auth.router.js"
 
 dotenv.config()
 
@@ -15,6 +16,9 @@ app.get('/', (req, res) => {
     "message": "Hello world"
   })
 })
+
+// Auth router
+// app.use(authRouter)
 
 async function startServer() {
   try {

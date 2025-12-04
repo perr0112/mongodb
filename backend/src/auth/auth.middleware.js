@@ -1,4 +1,3 @@
-
 /**
  * Check if there is an existing user in the session
  * @param {*} req 
