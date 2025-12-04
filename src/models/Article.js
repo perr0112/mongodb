@@ -1,26 +1,20 @@
 import mongoose from "mongoose";
 
 const categorySchema = new mongoose.Schema({
+  _id: new mongoose.Types.ObjectId(),
   label: {
     type: String,
     required: true,
     enum: {
-        values: [
-            "Technologie",
-            "Lifestyle",
-            "Voyage",
-            "Cuisine",
-            "Autre"
-        ]
-    }
-  },
-  //   subCategories: [{ label: String }],
-  subCategories: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+      values: ["Entrées", "Plats principaux", "Desserts", "Cocktails", "Autre"],
     },
-  ],
+  },
+  // subCategories: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Category",
+  //   },
+  // ],
   articles: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -29,51 +23,8 @@ const categorySchema = new mongoose.Schema({
   ],
 });
 
-const userSchema = new mongoose.Schema(
-  {
-    _id: new mongoose.Types.ObjectId(),
-    username: {
-      type: String,
-      required: true,
-      index: { unique: true },
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
-    firstName: {
-      type: String,
-      required: true,
-    },
-    hashedPassword: {
-      type: String,
-      required: true,
-    },
-    isAdmin: { type: Boolean, default: false },
-    email: {
-      type: String,
-      required: true,
-    },
-    // role: String, // user | admin | moderator
-    createdAt: { type: Date, default: Date.now() },
-    avatarUrl: String,
-  },
-  {
-    timestamps: true,
-  }
-);
-
 const articleSchema = new mongoose.Schema(
   {
-    // ensemble des attributs de l'entité
-    /*
-        title
-        content
-        author
-        isPublished
-        category
-        views
-        */
     title: {
       type: String,
       required: [true, "Le titre est obligatoire"],
@@ -86,7 +37,6 @@ const articleSchema = new mongoose.Schema(
       trim: true,
       maxLength: [2000, "Le contenu ne peut pas dépasser 2000 caractères"],
     },
-    // comments: [{ content: String, date: Date, author: User }],
     comments: [
       {
         content: String,
@@ -96,6 +46,13 @@ const articleSchema = new mongoose.Schema(
           ref: "User",
           required: true,
         },
+        article: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Article",
+          required: true,
+        },
+        createdAt: { type: Date, default: Date.now() },
+        
       },
     ],
     author: {
@@ -110,9 +67,9 @@ const articleSchema = new mongoose.Schema(
       required: true,
     },
     views: {
-        type: Number,
-        default: 0,
-        min: 0,
+      type: Number,
+      default: 0,
+      min: 0,
     },
     createdAt: { type: Date, default: Date.now() },
     updatedAt: { type: Date, default: Date.now() },
@@ -123,6 +80,7 @@ const articleSchema = new mongoose.Schema(
   }
 );
 
-const User = mongoose.model("User", userSchema);
 const Article = mongoose.model("Article", articleSchema);
 const Category = mongoose.model("Category", categorySchema);
+
+export { Article, Category };
