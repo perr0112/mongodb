@@ -25,6 +25,7 @@ const categorySchema = new mongoose.Schema({
 
 const articleSchema = new mongoose.Schema(
   {
+    _id: new mongoose.Types.ObjectId(),
     title: {
       type: String,
       required: [true, "Le titre est obligatoire"],
@@ -52,7 +53,7 @@ const articleSchema = new mongoose.Schema(
           required: true,
         },
         createdAt: { type: Date, default: Date.now() },
-        
+        updatedAt: { type: Date, default: Date.now() },
       },
     ],
     author: {

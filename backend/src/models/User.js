@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    _id: new mongoose.Types.ObjectId(),
     username: {
       type: String,
       required: true,
@@ -20,11 +19,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    isAdmin: { type: Boolean, default: false },
     email: {
       type: String,
       required: true,
     },
+    isAdmin: { type: Boolean, default: false },
     role: {
       type: String,
       enum: ["user", "admin", "moderator"],
