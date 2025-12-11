@@ -34,7 +34,14 @@ const isExistingUser = async (username) => {
     return user
 }
 
+const getUserFromId = async (id) => {
+    const user = await User.findById(id)
+
+    return user
+}
+
 export {
-    isExistingUser,
     createUser,
+    getUserFromId,
+    isExistingUser,
 }
