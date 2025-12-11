@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const categorySchema = new mongoose.Schema({
-  _id: new mongoose.Types.ObjectId(),
   label: {
     type: String,
     required: true,
@@ -25,7 +24,6 @@ const categorySchema = new mongoose.Schema({
 
 const articleSchema = new mongoose.Schema(
   {
-    _id: new mongoose.Types.ObjectId(),
     title: {
       type: String,
       required: [true, "Le titre est obligatoire"],
@@ -35,6 +33,7 @@ const articleSchema = new mongoose.Schema(
     slug: {
       type: String,
       trim: true,
+      unique: true,
     },
     content: {
       type: String,
@@ -69,7 +68,7 @@ const articleSchema = new mongoose.Schema(
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
-      required: true,
+      // required: true,
     },
     views: {
       type: Number,
