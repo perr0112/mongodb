@@ -1,9 +1,12 @@
 import express from "express"
 import dotenv from "dotenv"
 
+import cookieParser from "cookie-parser"
+
 import { connectDB } from "./config/database.js"
 
 import authRouter from "./routes/auth.js"
+import userRouter from "./routes/user.js"
 
 dotenv.config()
 
@@ -11,6 +14,7 @@ const app = express()
 const port = process.env.port || 3000
 
 app.use(express.json())
+app.use(cookieParser())
 
 app.get('/', (req, res) => {
   // res.send('Hello World!')
@@ -20,8 +24,11 @@ app.get('/', (req, res) => {
   })
 })
 
+// Routers
 // Auth router
 app.use("/auth", authRouter)
+// User router
+app.use("/users", userRouter)
 
 async function startServer() {
   try {
