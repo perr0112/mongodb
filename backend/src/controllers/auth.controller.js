@@ -18,18 +18,31 @@ class AuthController {
         const match = await bcrypt.compare(password, user.hashedPassword)
 
         if (match === false) {
-            console.error("Match impossible")
+            res.json({ "message": "Identifiants invalides" })
         } else {
-            const jwtToken = jwt.sign({ username }, JWT_SECRET, {
+            const id = user._id.toString()
+
+            const jwtToken = jwt.sign({ id }, JWT_SECRET, {
                 expiresIn: JWT_EXPIRATION,
             });
-            res.cookie("jwtToken", jwtToken, { httpOnly: true, secure: true });
-            res.json(jwtToken);
+
+            res.cookie("jwtToken", jwtToken).json({
+                success: true,
+                message: "Connexion réussie"
+            })
+
+            // res.header('token', jwtToken).json({
+            //     success: true,
+            //     message: "Connexion réussie"
+            // })
+
+            next()
         }
     }
 
     logout(req, res, next) {
-        console.log("logout")
+        res.clearCookie("jwtToken")
+        res.json({ "message": "Déconnexion réussie" })
     }
 
     async register(req, res, next) {
@@ -53,10 +66,6 @@ class AuthController {
         }
 
         createUser(username, firstName, lastName, email, password)
-    }
-
-    getMe(req, res, next) {
-        console.log("me", req.user)
     }
 }
 
