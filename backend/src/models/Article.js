@@ -32,6 +32,10 @@ const articleSchema = new mongoose.Schema(
       trim: true,
       maxLength: [200, "Le titre ne peut pas dépasser 200 caractères"],
     },
+    slug: {
+      type: String,
+      trim: true,
+    },
     content: {
       type: String,
       required: [true, "Le contenu est obligatoire"],
