@@ -5,8 +5,11 @@ import cookieParser from "cookie-parser"
 
 import { connectDB } from "./config/database.js"
 
-import authRouter from "./routes/auth.js"
-import userRouter from "./routes/user.js"
+import {
+  userRouter,
+  authRouter,
+  articlesRouter
+ } from "./routes/index.js"
 
 dotenv.config()
 
@@ -29,6 +32,8 @@ app.get('/', (req, res) => {
 app.use("/auth", authRouter)
 // User router
 app.use("/users", userRouter)
+// Articles router
+app.use("/articles", articlesRouter)
 
 async function startServer() {
   try {
