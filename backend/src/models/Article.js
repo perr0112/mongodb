@@ -25,11 +25,16 @@ const categorySchema = new mongoose.Schema({
 
 const articleSchema = new mongoose.Schema(
   {
+    _id: new mongoose.Types.ObjectId(),
     title: {
       type: String,
       required: [true, "Le titre est obligatoire"],
       trim: true,
       maxLength: [200, "Le titre ne peut pas dépasser 200 caractères"],
+    },
+    slug: {
+      type: String,
+      trim: true,
     },
     content: {
       type: String,
@@ -52,7 +57,7 @@ const articleSchema = new mongoose.Schema(
           required: true,
         },
         createdAt: { type: Date, default: Date.now() },
-        
+        updatedAt: { type: Date, default: Date.now() },
       },
     ],
     author: {

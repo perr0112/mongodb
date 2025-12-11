@@ -23,8 +23,8 @@ export function isAdmin(req, res, next) {
     const { role } = currentUser
 
     if (role !== "admin") {
-        return res.render('error',
-            { message: "Vous devez être connecté en tant qu'administrateur pour réaliser cette action." }
+        return res.json(
+            { "message": "Vous devez être connecté en tant qu'administrateur pour réaliser cette action." }
         )
     }
 
