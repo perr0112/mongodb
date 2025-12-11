@@ -11,6 +11,7 @@ const createUser = async (
     lastName,
     email,
     password,
+    role = "user"
 ) => {
     // Hash password
     const hashedPassword = bcrypt.hashSync(password, salt)
@@ -18,7 +19,7 @@ const createUser = async (
     try {
         // Create user
         const user = new User({
-            username, lastName, firstName, hashedPassword, email
+            username, lastName, firstName, hashedPassword, email, role
         })
         await user.save()
 
@@ -28,8 +29,8 @@ const createUser = async (
     }
 }
 
-const isExistingUser = async (username) => {
-    const user = await User.findOne({ username })
+const isExistingUser = async (username, email) => {
+    const user = await User.findOne({ username, email })
 
     return user
 }
@@ -40,8 +41,15 @@ const getUserFromId = async (id) => {
     return user
 }
 
+const getUserFromEmail = async (email) => {
+    const user = await User.findOne({ email })
+    
+    return user
+}
+
 export {
     createUser,
     getUserFromId,
     isExistingUser,
+    getUserFromEmail,
 }
