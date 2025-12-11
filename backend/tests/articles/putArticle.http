@@ -1,0 +1,7 @@
+PUT http://localhost:3000/articles/693ad32862ba58bf15ab6803
+Content-Type: application/json
+
+{
+    "title": "Nouvel article 2",
+    "content": "Contenu d'un nouvel article 2."
+}
