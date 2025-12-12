@@ -1,20 +1,20 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
-import { createUser, isExistingUser } from "../services/user.service.js"
+import { createUser, getUserFromEmail, isExistingUser } from "../services/user.service.js"
 
 import { JWT_EXPIRATION, JWT_SECRET } from "../config/constants.js"
 
 class AuthController {
     async login(req, res, next) {   
         console.log("login", req, res)
-        const { username, password } = req.body
+        const { email, password } = req.body
 
         console.log("_______________________")
         console.log(JWT_EXPIRATION, JWT_SECRET)
         console.log("_______________________")
 
-        const user = await isExistingUser(username)
+        const user = await getUserFromEmail(email)
         const match = await bcrypt.compare(password, user.hashedPassword)
 
         if (match === false) {
@@ -52,20 +52,21 @@ class AuthController {
             firstName,
             lastName,
             email,
+            role,
             password
         } = req.body
 
-        const user = await isExistingUser(username)
+        const user = await isExistingUser(username, email)
 
         if (user) {
-            console.error("Un utilisateur avec cet username existe déjà")
+            console.error("Un utilisateur existe déjà")
 
             res.json({
-                "message": "Un utilisateur avec cet username existe déjà"
+                "message": "Un utilisateur avec ce nom d'utilisateur ou cet email existe déjà"
             })
         }
 
-        createUser(username, firstName, lastName, email, password)
+        createUser(username, firstName, lastName, email, password, role)
     }
 }
 
