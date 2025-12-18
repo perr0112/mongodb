@@ -149,6 +149,76 @@
  *           type: string
  *           format: date-time
  *           example: "2025-12-18T10:20:00.000Z"
+ *     ErrorResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *           example: "Une erreur est survenue"
+ *
+ *     LoginRequest:
+ *       type: object
+ *       required: [email, password]
+ *       properties:
+ *         email:
+ *           type: string
+ *           format: email
+ *           example: "admin@example.com"
+ *         password:
+ *           type: string
+ *           example: "testpassword"
+ *
+ *     RegisterRequest:
+ *       type: object
+ *       required: [username, firstName, lastName, email, password]
+ *       properties:
+ *         username:
+ *           type: string
+ *           example: "testuser"
+ *         firstName:
+ *           type: string
+ *           example: "Test"
+ *         lastName:
+ *           type: string
+ *           example: "User"
+ *         email:
+ *           type: string
+ *           format: email
+ *           example: "testuser@example.com"
+ *         password:
+ *           type: string
+ *           example: "testpassword"
+ *         role:
+ *           type: string
+ *           enum: ["user", "admin", "moderator"]
+ *           example: "user"
+ *
+ *     ArticleCreateRequest:
+ *       type: object
+ *       required: [title, content, author]
+ *       properties:
+ *         title:
+ *           type: string
+ *           maxLength: 200
+ *           example: "Nouvel article"
+ *         content:
+ *           type: string
+ *           maxLength: 2000
+ *           example: "Contenu d'un nouvel article."
+ *         author:
+ *           $ref: "#/components/schemas/MongoId"
+ *
+ *     ArticleUpdateRequest:
+ *       type: object
+ *       properties:
+ *         title:
+ *           type: string
+ *           maxLength: 200
+ *           example: "Article modifié"
+ *         content:
+ *           type: string
+ *           maxLength: 2000
+ *           example: "Nouveau contenu"
  *
  *   securitySchemes:
  *     bearerAuth:
