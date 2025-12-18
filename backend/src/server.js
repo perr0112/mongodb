@@ -1,9 +1,12 @@
 import express from "express"
 import dotenv from "dotenv"
 
+import bodyParser from "body-parser"
+import swaggerJsdoc from "swagger-jsdoc"
+import swaggerUi from "swagger-ui-express"
 import cookieParser from "cookie-parser"
 
-import { connectDB } from "./config/database.js"
+import { connectDB, options } from "./config/database.js"
 
 import {
   userRouter,
@@ -34,6 +37,14 @@ app.use("/auth", authRouter)
 app.use("/users", userRouter)
 // Articles router
 app.use("/articles", articlesRouter)
+
+const specs = swaggerJsdoc(options)
+
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs, { explorer: true })
+)
 
 async function startServer() {
   try {

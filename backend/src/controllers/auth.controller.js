@@ -5,20 +5,26 @@ import { createUser, getUserFromEmail, isExistingUser } from "../services/user.s
 
 import { JWT_EXPIRATION, JWT_SECRET } from "../config/constants.js"
 
+import { HTTPStatus } from "../config/httpStatus.js"
+
 class AuthController {
     async login(req, res, next) {   
         console.log("login", req, res)
         const { email, password } = req.body
 
-        console.log("_______________________")
-        console.log(JWT_EXPIRATION, JWT_SECRET)
-        console.log("_______________________")
+        if (!email || !password) {
+            return res
+                .status(HTTPStatus.BAD_REQUEST)
+                .json({ message: "Email et mot de passe requis" })
+        }
 
         const user = await getUserFromEmail(email)
         const match = await bcrypt.compare(password, user.hashedPassword)
 
         if (match === false) {
-            res.json({ "message": "Identifiants invalides" })
+            return res
+                .status(HTTPStatus.UNAUTHORIZED)
+                .json({ message: "Identifiants invalides" })
         } else {
             const id = user._id.toString()
 
@@ -26,7 +32,7 @@ class AuthController {
                 expiresIn: JWT_EXPIRATION,
             });
 
-            res.cookie("jwtToken", jwtToken).json({
+            return res.status(HTTPStatus.OK).cookie("jwtToken", jwtToken).json({
                 success: true,
                 message: "Connexion réussie"
             })
@@ -35,14 +41,14 @@ class AuthController {
             //     success: true,
             //     message: "Connexion réussie"
             // })
-
-            next()
         }
     }
 
-    logout(req, res, next) {
-        res.clearCookie("jwtToken")
-        res.json({ "message": "Déconnexion réussie" })
+    logout(req, res) {
+       return res
+        .status(HTTPStatus.OK)
+        .clearCookie("jwtToken")
+        .json({ message: "Déconnexion réussie" })
     }
 
     async register(req, res, next) {
@@ -56,13 +62,18 @@ class AuthController {
             password
         } = req.body
 
+        if (!username || !firstName || !lastName || !email || !password) {
+           return res
+            .status(HTTPStatus.BAD_REQUEST)
+            .json({ message: "Champs requis manquants" })
+        }
+
         const user = await isExistingUser(username, email)
 
         if (user) {
-            console.error("Un utilisateur existe déjà")
-
-            res.json({
-                "message": "Un utilisateur avec ce nom d'utilisateur ou cet email existe déjà"
+            return res.status(HTTPStatus.BAD_REQUEST).json({
+                message:
+                    "Un utilisateur avec ce nom d'utilisateur ou cet email existe déjà",
             })
         }
 

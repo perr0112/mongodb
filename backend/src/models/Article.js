@@ -43,20 +43,8 @@ const articleSchema = new mongoose.Schema(
     },
     comments: [
       {
-        content: String,
-        date: Date,
-        author: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-          required: true,
-        },
-        article: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Article",
-          required: true,
-        },
-        createdAt: { type: Date, default: Date.now() },
-        updatedAt: { type: Date, default: Date.now() },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
       },
     ],
     author: {
@@ -84,7 +72,33 @@ const articleSchema = new mongoose.Schema(
   }
 );
 
+const commentSchema = new mongoose.Schema(
+  {
+    content: {
+      type: String,
+      required: true,
+      trim: true,
+      maxLength: 500,
+    },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    article: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Article",
+      required: true,
+      index: true,
+    },
+    createdAt: { type: Date, default: Date.now() },
+    updatedAt: { type: Date, default: Date.now() },
+  },
+  { timestamps: true }
+);
+
 const Article = mongoose.model("Article", articleSchema);
 const Category = mongoose.model("Category", categorySchema);
+const Comment = mongoose.model("Comment", commentSchema);
 
-export { Article, Category };
+export { Article, Category, Comment };

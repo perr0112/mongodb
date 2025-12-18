@@ -1,46 +1,53 @@
 import { createArticle, deleteArticle, getArticleById, getArticleBySlug, getArticles, getArticlesByUser, updateArticle } from "../services/articles.service.js"
 import { getUserFromId } from "../services/user.service.js"
 
-class Articlecontroller {
+import { HTTPStatus } from "../config/httpStatus.js"
+
+class ArticleController {
     async create(req, res, next) {
         const { title, content, author } = req.body
+
+        if (!title || !content || !author) {
+            return res
+                .status(HTTPStatus.BAD_REQUEST)
+                .json({ message: "Les champs title, content et author sont requis" })
+        }
+
         const article = await createArticle(title, content, author)
 
         if (!article) {
-            res.status(500).json({ message: "Erreur lors de la création de l'article" })
-            return
+            return res
+                .status(HTTPStatus.BAD_REQUEST)
+                .json({ message: "Erreur lors de la création de l'article" })
         }
 
-        res.json({
-            message: "Article créé avec succès",
-            article,
-        })
-
-        next()
+        return res.status(HTTPStatus.CREATED).json(article)
     }
 
     async getAll(req, res, next) {
         const articles = await getArticles()
-        res.json(articles)
 
-        next()
+        if (!articles) {
+            return res
+                .status(HTTPStatus.NOT_FOUND)
+                .json({ message: "Aucun article trouvé" })
+        }
+
+        return res.status(HTTPStatus.OK).json(articles)
     }
 
     async getByUser(req, res, next) {
         const authorId = req.params.id
         const user = await getUserFromId(authorId)
 
-        console.log("Author ID:", authorId, "User:", user)
-
         if (!user) {
-            res.status(404).json({ message: "Utilisateur non trouvé" })
-            return
+            return res
+                .status(HTTPStatus.NOT_FOUND)
+                .json({ message: "Utilisateur non trouvé" })
         }
 
         const articles = await getArticlesByUser(authorId)
-        res.json(articles)
-
-        next()
+        return res.status(HTTPStatus.OK).json(articles)
     }
 
     async getBySlug(req, res, next) {
@@ -48,34 +55,34 @@ class Articlecontroller {
         const article = await getArticleBySlug(slug)
 
         if (!article) {
-            res.status(404).json({ message: "Article non trouvé" })
-            return
+            return res
+                .status(HTTPStatus.NOT_FOUND)
+                .json({ message: "Article non trouvé" })
         }
 
-        console.log("Slug:", slug, "Article:", article)
-
-        res.json(article)
-
-        next()
+        return res.json(article)
     }
 
     async update(req, res, next) {
         const { title, content } = req.body
         const articleId = req.params.id
 
+        if (!title || !content) {
+            return res
+                .status(HTTPStatus.BAD_REQUEST)
+                .json({ message: "Les champs title et content sont requis" })
+        }
+
         const article = await updateArticle(articleId, title, content)
 
         if (!article) {
-            res.status(404).json({ message: "Article non trouvé" })
-            return
+            return res
+                .status(HTTPStatus.NOT_FOUND)
+                .json({ message: "Article non trouvé" })
         }
 
-        res.json({
-            message: "Article mis à jour avec succès",
-            article,
-        })
-
-        next()
+        return res.
+            status(HTTPStatus.OK).json(article)
     }
 
     async delete(req, res, next) {
@@ -83,19 +90,18 @@ class Articlecontroller {
         const article = await getArticleById(articleId)
 
         if (!article) {
-            res.status(404).json({ message: "Article non trouvé" })
-            return
+            return res
+                .status(HTTPStatus.NOT_FOUND)
+                .json({ message: "Article non trouvé" })
         }
 
         await deleteArticle(articleId)
 
-        res.json({
+        return res.json({
             message: "Article supprimé avec succès",
             article,
         })
-
-        next()
     }
 }
 
-export const articleController = new Articlecontroller()
+export const articleController = new ArticleController()
