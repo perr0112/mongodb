@@ -2,18 +2,18 @@ import jwt from "jsonwebtoken"
 
 import { getUserFromId } from "../services/user.service.js";
 import { JWT_SECRET } from "../config/constants.js";
+import { HTTPStatus } from "../config/httpStatus.js";
 
 class UserController {
     async getUserById(req, res, next) {
         const user = await getUserFromId(req.params.id)
 
         if (!user) {
-            console.error("Utilisateur introuvable")
+            return res
+                .status(HTTPStatus.NOT_FOUND)
+                .json({ message: "Utilisateur introuvable" })
         } else {
-            console.log("Utilisateur retrouvé --")
-            res.json(user)
-
-            next()
+            return res.status(HTTPStatus.OK).json(user)
         }
     }
 
@@ -21,7 +21,9 @@ class UserController {
         const token = req.cookies.jwtToken || null
         
         if (!token) {
-            return res.json({ "message": "Vous devez vous connecter." })
+            return res
+                .status(HTTPStatus.UNAUTHORIZED)
+                .json({ message: "Vous devez vous connecter" })
         }
 
         const decodedUser = jwt.verify(token, JWT_SECRET)
@@ -29,13 +31,9 @@ class UserController {
 
         const user = await getUserFromId(id)
 
-        console.log("decodedToken", decodedUser)
-
-        res.json({
+        return res.status(HTTPStatus.OK).json({
             user
         })
-
-        next()
     }
 }
 
