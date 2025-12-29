@@ -1,8 +1,12 @@
+import { Route, Routes } from "react-router-dom"
+
+import Authentication from "./pages/authentication/Authentication"
+
 function App() {
   return (
-    <div>
-      <h1>Le Carnet Gourmand</h1>
-    </div>
+    <Routes>
+      <Route path="/auth" element={<Authentication />} />
+    </Routes>
   )
 }
 
