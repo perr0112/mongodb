@@ -1,0 +1,23 @@
+.tag {
+    display: inline-block;
+    padding: 0.25em 0.5em;
+    border-radius: 0.25em;
+    font-size: 0.875em;
+    color: #FFFFFF;
+}
+
+.tag-blue {
+    background-color: var(--color-tag-blue);
+}
+
+.tag-orange {
+    background-color: var(--color-tag-orange);
+}
+
+.tag-green {
+    background-color: var(--color-tag-green);
+}
+
+.tag-brown {
+    background-color: var(--color-tag-brown);
+}

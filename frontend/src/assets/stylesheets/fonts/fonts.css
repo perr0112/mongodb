@@ -1,0 +1,9 @@
+@font-face {
+    font-family: "Genty-Demo";
+    src: url("./GentyDemo-Regular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "Work-Sans";
+    src: url("./WorkSans-VariableFont_wght.ttf") format("truetype");
+}

@@ -1,1 +1,18 @@
-@import "tailwindcss";
+/* Utils */
+@import "./base/global.css";
+@import "./base/reset.css";
+
+/* Fonts */
+@import "./fonts/fonts.css";
+
+/* Typography */
+@import "./base/typography.css";
+
+/* Variables */
+@import "./variables/colors.css";
+
+/* Components */
+@import "./components/tag.css";
+
+/* Pages */
+@import "./pages/authentication.css";
