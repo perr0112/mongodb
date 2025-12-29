@@ -1,0 +1,19 @@
+:root {
+    --color-primary: #F3EDE5;
+    --color-secondary: #D53232;
+    --color-text: #000000;
+
+    /* tags */
+    --color-tag-blue: #4B2CE3;
+    --color-tag-orange: #FF5E29;
+    --color-tag-green: #00804A;
+    --color-tag-brown: #4F060B;
+}
+
+.text-primary {
+    color: var(--color-primary);
+}
+
+.text-secondary {
+    color: var(--color-secondary);
+}
