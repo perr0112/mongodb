@@ -34,13 +34,9 @@ class AuthController {
 
             return res.status(HTTPStatus.OK).cookie("jwtToken", jwtToken).json({
                 success: true,
-                message: "Connexion réussie"
+                message: "Connexion réussie",
+                user,
             })
-
-            // res.header('token', jwtToken).json({
-            //     success: true,
-            //     message: "Connexion réussie"
-            // })
         }
     }
 
@@ -78,6 +74,13 @@ class AuthController {
         }
 
         createUser(username, firstName, lastName, email, password, role)
+
+        return res
+            .status(HTTPStatus.CREATED)
+            .json({
+                message: "Utilisateur créé avec succès",
+                success: true,
+            })
     }
 }
 
