@@ -1,12 +1,17 @@
 import { Route, Routes } from "react-router-dom"
 
+// @ts-ignore
 import Authentication from "./pages/authentication/Authentication"
+// @ts-ignore
+import { UserProvider } from "./contexts/user/Provider.jsx"
 
 function App() {
   return (
-    <Routes>
-      <Route path="/auth" element={<Authentication />} />
-    </Routes>
+    <UserProvider>
+      <Routes>
+        <Route path="/auth" element={<Authentication />} />
+      </Routes>
+    </UserProvider>
   )
 }
 
