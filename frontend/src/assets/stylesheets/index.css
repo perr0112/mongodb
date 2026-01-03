@@ -13,6 +13,13 @@
 
 /* Components */
 @import "./components/tag.css";
+@import "./components/input.css";
+@import "./components/auth.css";
+@import "./components/button.css";
+@import "./components/link.css";
 
 /* Pages */
 @import "./pages/authentication.css";
+
+/* Layout */
+@import "./layout/header.css";
