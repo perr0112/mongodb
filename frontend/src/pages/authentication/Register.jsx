@@ -1,11 +1,11 @@
 import { useState } from "react"
-import toast, { Toaster } from "react-hot-toast"
+import toast from "react-hot-toast"
 
 import { register } from "../../services"
 
 import Input from "../../components/form/Input"
 import Button from "../../components/ui/button"
-import Link from "../../components/ui/Link"
+import LinkComponent from "../../components/ui/Link"
 
 const Register = ({ toggleMode }) => {
     const [username, setUsername] = useState("")
@@ -29,8 +29,6 @@ const Register = ({ toggleMode }) => {
         })
 
         res.then(response => {
-            console.log("resp", response)
-
             const { data, status } = response
 
             setTimeout(() => {
@@ -43,7 +41,6 @@ const Register = ({ toggleMode }) => {
             }, 1000)
         }
         ).catch(error => {
-            console.log("error", error)
             setTimeout(() => {
                 setLoading(false)
                 toast.error(error.response.data.message || "Erreur lors de l'inscription")
@@ -53,8 +50,6 @@ const Register = ({ toggleMode }) => {
 
     return (
         <div>
-            <Toaster />
-
             <form className="authentication__form-register" onSubmit={handleSubmit}>
                 <div className="inputs__group">
                     <Input
@@ -119,7 +114,7 @@ const Register = ({ toggleMode }) => {
                     />
 
                     <div className="actions__link">
-                        <Link label="Se connecter" type="button" onClick={toggleMode} />
+                        <LinkComponent label="Se connecter" type="button" onClick={toggleMode} />
                     </div>
                 </div>
 

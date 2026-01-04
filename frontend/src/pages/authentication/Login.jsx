@@ -1,29 +1,29 @@
 import { useContext, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import toast from "react-hot-toast"
 
-import toast, { Toaster } from "react-hot-toast"
+import { login } from "../../services/index"
+
+import UserContext from "../../contexts/user/UserContext"
 
 import Input from "../../components/form/Input"
 import Button from "../../components/ui/button"
-import Link from "../../components/ui/Link"
-
-import { login } from "../../services/index"
-import UserContext from "../../contexts/user"
+import LinkComponent from "../../components/ui/Link"
 
 const Login = ({ toggleMode }) => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-
+    const [email, setEmail] = useState("admin@lcg-dev.com")
+    const [password, setPassword] = useState("admin123")
     const [loading, setLoading] = useState(false)
 
     const { saveUser } = useContext(UserContext)
+    
+    const navigate = useNavigate()
 
     const handleSubmit = (event) => {
         event.preventDefault()
         setLoading(true)
         const res = login(email, password)
         res.then(response => {
-            console.log("resp", response)
-
             const { data, status } = response
 
             setTimeout(() => {
@@ -31,6 +31,8 @@ const Login = ({ toggleMode }) => {
                 if (status === 200 && data.success) {
                     toast.success("Connexion réussie")
                     saveUser(data.user)
+
+                    navigate("/")
                 } else {
                     toast.error(data.message || "Erreur lors de la connexion")
                 }
@@ -46,7 +48,6 @@ const Login = ({ toggleMode }) => {
 
     return (
         <div>
-            <Toaster />
 
             <form className="authentication__form-login" onSubmit={handleSubmit}>
 
@@ -84,8 +85,8 @@ const Login = ({ toggleMode }) => {
                     />
 
                     <div className="actions__link">
-                        <Link label="S'inscrire ici" type="button" onClick={toggleMode} />
-                        <Link href="/" label="Mot de passe oublié" type="button" />
+                        <LinkComponent label="S'inscrire ici" type="button" onClick={toggleMode} />
+                        <LinkComponent href="/" label="Mot de passe oublié" type="button" />
                     </div>
                 </div>
 
