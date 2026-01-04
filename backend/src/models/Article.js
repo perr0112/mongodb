@@ -41,6 +41,10 @@ const articleSchema = new mongoose.Schema(
       trim: true,
       maxLength: [2000, "Le contenu ne peut pas dépasser 2000 caractères"],
     },
+    coverImage: {
+      type: String,
+      required: false,
+    },
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -64,12 +68,8 @@ const articleSchema = new mongoose.Schema(
       min: 0,
     },
     createdAt: { type: Date, default: Date.now() },
-    updatedAt: { type: Date, default: Date.now() },
+    updatedAt: { type: Date },
   },
-  {
-    // options générales sur l'entité
-    timestamps: true,
-  }
 );
 
 const commentSchema = new mongoose.Schema(
@@ -92,7 +92,7 @@ const commentSchema = new mongoose.Schema(
       index: true,
     },
     createdAt: { type: Date, default: Date.now() },
-    updatedAt: { type: Date, default: Date.now() },
+    updatedAt: { type: Date },
   },
   { timestamps: true }
 );
