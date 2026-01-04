@@ -7,10 +7,16 @@ class ArticleController {
     async create(req, res, next) {
         const { title, content, author } = req.body
 
-        if (!title || !content || !author) {
+        if (!author) {
             return res
                 .status(HTTPStatus.BAD_REQUEST)
-                .json({ message: "Les champs title, content et author sont requis" })
+                .json({ message: "Vous devez être connecté pour créer un article" })
+        }
+
+        if (!title || !content) {
+            return res
+                .status(HTTPStatus.BAD_REQUEST)
+                .json({ message: "Les champs title et content sont requis" })
         }
 
         const article = await createArticle(title, content, author)
