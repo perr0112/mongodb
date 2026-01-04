@@ -1,9 +1,9 @@
 .tag {
-    display: inline-block;
-    padding: 0.25em 0.5em;
-    border-radius: 0.25em;
-    font-size: 0.875em;
-    color: #FFFFFF;
+    color: var(--color-primary);
+    padding: 1rem;
+    border-radius: 9999px;
+    font-weight: bold;
+    width: max-content;
 }
 
 .tag-blue {
@@ -20,4 +20,13 @@
 
 .tag-brown {
     background-color: var(--color-tag-brown);
+}
+
+.tag-facile {
+    background-color: var(--color-tag-easy);
+    color: var(--color-text);
+}
+
+.tag-intermediaire {
+    background-color: var(--color-secondary);
 }
