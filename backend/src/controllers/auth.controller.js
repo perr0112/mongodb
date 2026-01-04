@@ -19,6 +19,13 @@ class AuthController {
         }
 
         const user = await getUserFromEmail(email)
+
+        if (!user) {
+            return res
+                .status(HTTPStatus.UNAUTHORIZED)
+                .json({ message: "Identifiants invalides" })
+        }
+
         const match = await bcrypt.compare(password, user.hashedPassword)
 
         if (match === false) {
@@ -32,15 +39,14 @@ class AuthController {
                 expiresIn: JWT_EXPIRATION,
             });
 
-            return res.status(HTTPStatus.OK).cookie("jwtToken", jwtToken).json({
+            return res.status(HTTPStatus.OK).cookie("jwtToken", jwtToken, {
+                httpOnly: true,
+                secure: true,
+            }).json({
                 success: true,
-                message: "Connexion réussie"
+                message: "Connexion réussie",
+                user,
             })
-
-            // res.header('token', jwtToken).json({
-            //     success: true,
-            //     message: "Connexion réussie"
-            // })
         }
     }
 
@@ -78,6 +84,13 @@ class AuthController {
         }
 
         createUser(username, firstName, lastName, email, password, role)
+
+        return res
+            .status(HTTPStatus.CREATED)
+            .json({
+                message: "Utilisateur créé avec succès",
+                success: true,
+            })
     }
 }
 

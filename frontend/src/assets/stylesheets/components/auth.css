@@ -1,0 +1,21 @@
+.authentication__form-login {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.inputs__group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.inputs__group--horizontal {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.inputs__group--horizontal .form__input-container {
+    flex: 1;
+}

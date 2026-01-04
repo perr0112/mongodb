@@ -13,6 +13,6 @@ authRouter.post("/register",
 authRouter.get("/login", authController.login)
 authRouter.post("/login", authController.login)
 
-authRouter.get("/logout", authController.logout)
+authRouter.post("/logout", authController.logout)
 
 export default authRouter

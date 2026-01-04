@@ -1,0 +1,24 @@
+.form__input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form__input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+
+    color: #7a7a7a;
+}
+
+.form__input:focus {
+    border-color: var(--color-secondary);
+}
+
+.form__input-label {
+    font-size: 14px;
+}

@@ -2,12 +2,17 @@
     --color-primary: #F3EDE5;
     --color-secondary: #D53232;
     --color-text: #000000;
+    --color-border: #CCCCCC;
+    
+    /* hover */
+    --color-secondary-hovered: #B20013;
 
     /* tags */
     --color-tag-blue: #4B2CE3;
     --color-tag-orange: #FF5E29;
     --color-tag-green: #00804A;
     --color-tag-brown: #4F060B;
+    --color-tag-easy: #FFD02F;
 }
 
 .text-primary {

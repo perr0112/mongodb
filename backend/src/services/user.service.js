@@ -30,7 +30,10 @@ const createUser = async (
 }
 
 const isExistingUser = async (username, email) => {
-    const user = await User.findOne({ username, email })
+    // const user = await User.findOne({ username, email })
+    const user = await User.findOne({
+        $or: [{ username }, { email }]
+    });
 
     return user
 }
