@@ -17,9 +17,11 @@
 @import "./components/auth.css";
 @import "./components/button.css";
 @import "./components/link.css";
+@import "./components/card.css";
 
 /* Pages */
 @import "./pages/authentication.css";
+@import "./pages/home.css";
 
 /* Layout */
 @import "./layout/header.css";
