@@ -1,22 +1,25 @@
-const Link = ({ type, href, label, onClick }) => {
+import { Link } from "react-router-dom"
+
+const LinkComponent = ({ type, href, label, active, onClick, variant = "primary", style }) => {
     return (
         type === 'button' ? (
             <span
                 className={`link link--button`}
                 onClick={onClick}
+                style={{...style}}
             >
                 {label}
             </span>
         ) : (
-            <a
-                href={href}
-                className={`link link--${type}`}
-                onClick={onClick}
+            <Link
+                to={href}
+                className={`link link--${type} link--${variant} ${active ? 'link--active' : ''}`}
+                style={{...style}}
             >
                 {label}
-            </a>
+            </Link>
         )
     )
 }
 
-export default Link
+export default LinkComponent
