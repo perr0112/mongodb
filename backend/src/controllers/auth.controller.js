@@ -19,6 +19,13 @@ class AuthController {
         }
 
         const user = await getUserFromEmail(email)
+
+        if (!user) {
+            return res
+                .status(HTTPStatus.UNAUTHORIZED)
+                .json({ message: "Identifiants invalides" })
+        }
+
         const match = await bcrypt.compare(password, user.hashedPassword)
 
         if (match === false) {
@@ -32,7 +39,10 @@ class AuthController {
                 expiresIn: JWT_EXPIRATION,
             });
 
-            return res.status(HTTPStatus.OK).cookie("jwtToken", jwtToken).json({
+            return res.status(HTTPStatus.OK).cookie("jwtToken", jwtToken, {
+                httpOnly: true,
+                secure: true,
+            }).json({
                 success: true,
                 message: "Connexion réussie",
                 user,
