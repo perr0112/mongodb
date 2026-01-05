@@ -205,6 +205,7 @@ const Recipes = () => {
                                     <Card
                                         key={item._id}
                                         isLink={true}
+                                        author={item.author}
                                         title={item.title}
                                         slug={item.slug}
                                         categories={item.categories ?? []}

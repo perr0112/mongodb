@@ -7,6 +7,7 @@
     padding: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background-color: var(--color-primary);
+    padding-bottom: 4rem;
 }
 
 .card__image {
@@ -36,7 +37,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.25rem;
-    margin-bottom: 2rem;
 }
 
 .card__info {
@@ -75,4 +75,34 @@
     font-weight: bold !important;
     margin-bottom: 0.5rem;
     color: var(--color-accent);
+}
+
+.card__author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.card__author img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author__details {
+    display: flex;
+    flex-direction: column;
+}
+
+.card__author p {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.card__author span {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
 }

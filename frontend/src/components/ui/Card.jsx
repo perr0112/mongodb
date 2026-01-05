@@ -1,7 +1,28 @@
 import { truncate } from "../../utils/string"
 import Tag from "../tag/Tag"
 
-const Card = ({ isLink, title, slug, categories, views, rating, countRatings, coverImg, style }) => {
+const Card = ({
+    isLink,
+    title,
+    slug,
+    categories,
+    views,
+    rating,
+    countRatings,
+    coverImg,
+    style,
+    author
+}) => {
+    console.log(author)
+
+    const {
+        firstName,
+        lastName,
+        avatar,
+        username,
+        avatarUrl
+    } = author
+
     return (
         <div className="card__container" style={style}>
 
@@ -10,7 +31,7 @@ const Card = ({ isLink, title, slug, categories, views, rating, countRatings, co
             </div>
 
             { isLink && (
-                <a href={`/articles/${slug}`} className="card__overlay-link"></a>
+                <a href={`/recipes/${slug}`} className="card__overlay-link"></a>
             )}
 
             <div className="card__info">
@@ -18,18 +39,24 @@ const Card = ({ isLink, title, slug, categories, views, rating, countRatings, co
                     {truncate(title, 40)}
                 </p>
                 <div className="card__categories">
-                    <div className="card__categories">
-                        {categories.map(({ label }, index) => (
-                            <Tag
-                                key={index}
-                                text={label}
-                                style={{
-                                    fontSize: "0.75rem",
-                                    padding: ".25rem .5rem",
-                                    fontWeight: "500",
-                                }}
-                            />
-                        ))}
+                    {categories.map(({ label }, index) => (
+                        <Tag
+                            key={index}
+                            text={label}
+                            style={{
+                                fontSize: "0.75rem",
+                                padding: ".25rem .5rem",
+                                fontWeight: "500",
+                            }}
+                        />
+                    ))}
+                </div>
+
+                <div className="card__author">
+                    <img src={avatarUrl} alt={username} />
+                    <div className="author__details">
+                        <p>Écrit par {firstName} {lastName}</p>
+                        <span>@{username}</span>
                     </div>
                 </div>
             </div>
