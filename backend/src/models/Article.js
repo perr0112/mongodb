@@ -5,15 +5,22 @@ const categorySchema = new mongoose.Schema({
     type: String,
     required: true,
     enum: {
-      values: ["Entrées", "Plats principaux", "Desserts", "Cocktails", "Autre"],
+      values: [
+        "Entrées",
+        "Plats",
+        "Desserts",
+        "Cocktails",
+        "Facile",
+        "Intermédiaire",
+        "Difficile",
+      ],
     },
   },
-  // subCategories: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Category",
-  //   },
-  // ],
+  slug: {
+    type: String,
+    required: true,
+    unique: true
+  },
   articles: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -57,15 +64,25 @@ const articleSchema = new mongoose.Schema(
       required: true,
     },
     isPublished: { type: Boolean, default: false },
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
-      // required: true,
-    },
+    // category: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Category",
+    //   // required: true,
+    // },
+    categories: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category",
+      },
+    ],
     views: {
       type: Number,
       default: 0,
       min: 0,
+    },
+    rating: {
+      average: { type: Number, default: 0, min: 0, max: 5 },
+      count: { type: Number, default: 0, min: 0 },
     },
     createdAt: { type: Date, default: Date.now() },
     updatedAt: { type: Date },
