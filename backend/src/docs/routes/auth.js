@@ -23,10 +23,10 @@
  *               email:
  *                 type: string
  *                 format: email
- *                 example: "admin@example.com"
+ *                 example: "admin@lcg-dev.com"
  *               password:
  *                 type: string
- *                 example: "testpassword"
+ *                 example: "admin123"
  *     responses:
  *       200:
  *         description: Connexion réussie
@@ -92,7 +92,7 @@
 /**
  * @swagger
  * /auth/logout:
- *   get:
+ *   post:
  *     tags: [Auth]
  *     summary: Déconnexion utilisateur
  *     description: Supprime le cookie `jwtToken`.

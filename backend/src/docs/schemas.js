@@ -163,10 +163,10 @@
  *         email:
  *           type: string
  *           format: email
- *           example: "admin@example.com"
+ *           example: "admin@lcg-dev.com"
  *         password:
  *           type: string
- *           example: "testpassword"
+ *           example: "admin123"
  *
  *     RegisterRequest:
  *       type: object
