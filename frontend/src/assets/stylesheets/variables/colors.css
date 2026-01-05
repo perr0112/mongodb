@@ -8,11 +8,14 @@
     --color-secondary-hovered: #B20013;
 
     /* tags */
-    --color-tag-blue: #4B2CE3;
-    --color-tag-orange: #FF5E29;
-    --color-tag-green: #00804A;
-    --color-tag-brown: #4F060B;
     --color-tag-easy: #FFD02F;
+    --color-tag-intermediaire: #FF5E29;
+    --color-tag-hard: #D90000;
+
+    --color-tag-entrees: #4B2CE3;
+    --color-tag-plats: #E49399;
+    --color-tag-desserts: #00804A;
+    --color-tag-cocktails: #4F060B;
 }
 
 .text-primary {
