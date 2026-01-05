@@ -94,16 +94,19 @@ const PersonalInfos = ({ user }) => {
                         label="Prénom"
                         value={infoData.firstName}
                         onChange={(e) => setInfoData({...infoData, firstName: e.target.value})}
+                        style={{ backgroundColor: 'var(--color-primary)' }}
                     />
                     <Input 
                         label="Nom"
                         value={infoData.lastName}
                         onChange={(e) => setInfoData({...infoData, lastName: e.target.value})}
+                        style={{ backgroundColor: 'var(--color-primary)' }}
                     />
                     <Input 
                         label="Email (non modifiable)"
                         value={infoData.email}
                         disabled
+                        style={{ backgroundColor: 'var(--color-primary)' }}
                     />
                     <Button label="Mettre à jour mes infos" type="submit" variant="primary" />
                 </form>
@@ -115,6 +118,7 @@ const PersonalInfos = ({ user }) => {
                         label="Nouveau mot de passe"
                         type="password"
                         placeholder="••••••••"
+                        style={{ backgroundColor: 'var(--color-primary)' }}
                         value={passwordData.password}
                         onChange={(e) => setPasswordData({...passwordData, password: e.target.value})}
                     />
@@ -122,6 +126,7 @@ const PersonalInfos = ({ user }) => {
                         label="Confirmer le nouveau mot de passe"
                         type="password"
                         placeholder="••••••••"
+                        style={{ backgroundColor: 'var(--color-primary)' }}
                         value={passwordData.confirmPassword}
                         onChange={(e) => setPasswordData({...passwordData, confirmPassword: e.target.value})}
                     />

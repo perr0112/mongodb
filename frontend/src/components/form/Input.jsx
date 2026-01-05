@@ -1,4 +1,4 @@
-const Input = ({ type, name, placeholder, disabled, value, onChange, label, required }) => {
+const Input = ({ type, name, placeholder, style, disabled, value, onChange, label, required }) => {
     return (
         <div className="form__input-container">
             {label && <label htmlFor={name} className="form__input-label">{label}</label>}
@@ -12,6 +12,7 @@ const Input = ({ type, name, placeholder, disabled, value, onChange, label, requ
                 autoComplete="off"
                 disabled={disabled}
                 required={required}
+                style={style}
             />
         </div>
     );
