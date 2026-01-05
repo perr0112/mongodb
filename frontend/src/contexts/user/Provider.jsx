@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
 
 import UserContext from "./UserContext"
 
 import { getMe, logout as apiLogout } from "../../services"
-import toast from "react-hot-toast"
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null)

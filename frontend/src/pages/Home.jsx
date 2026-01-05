@@ -8,6 +8,7 @@ import Card from "../components/ui/Card";
 
 import { CATEGORY_TYPES } from "../constants/categories.js";
 import { FAKE_CARDS_DATA } from "../constants/cards.js";
+import MainLogo from "../components/icons/main-logo.jsx";
 
 const Home = () => {
     const navigate = useNavigate()
@@ -49,6 +50,7 @@ const Home = () => {
                             <Card
                                 key={index}
                                 isLink={true}
+                                author={card.author}
                                 title={card.title}
                                 slug={card.slug}
                                 categories={card.categories}
@@ -135,6 +137,10 @@ const Home = () => {
                     />
                 </div>
 
+            </div>
+
+            <div className="floating-logo">
+                <MainLogo />
             </div>
         </div>
     )
