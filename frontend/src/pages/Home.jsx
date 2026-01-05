@@ -1,42 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Button from "../components/ui/button"
 import LinkComponent from "../components/ui/Link"
 import Tag from "../components/tag/Tag";
 import Card from "../components/ui/Card";
 
-const HOME_LABELS = [
-    { id: 1, label: "Entrées", type: "blue" },
-    { id: 2, label: "Plats", type: "orange" },
-    { id: 3, label: "Desserts", type: "green" },
-    { id: 4, label: "Cocktails", type: "brown" },
-    { id: 5, label: "Facile", type: "facile" },
-];
-
-const FAKE_CARDS_DATA = [
-    {
-        title: "Champignon flottant",
-        slug: "champignon-flottant",
-        categories: [
-            { label: "Plat", type: "orange" },
-            { label: "Intermédiaire", type: "intermediaire" },
-        ],
-        views: 124,
-        coverImg: "https://images.unsplash.com/photo-1508338712271-40539c947a8b?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-        title: "Promenade d’été",
-        slug: "promenade-dete",
-        categories: [
-            { label: "Dessert", type: "green" },
-            { label: "Facile", type: "facile" },
-        ],
-        views: 98,
-        coverImg: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    }
-]
+import { CATEGORY_TYPES } from "../constants/categories.js";
+import { FAKE_CARDS_DATA } from "../constants/cards.js";
 
 const Home = () => {
+    const navigate = useNavigate()
 
     const [floatingBarOpen, setFloatingBarOpen] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -124,12 +98,14 @@ const Home = () => {
                             <p>Catégories disponibles</p>
 
                             <div className="tags__group">
-                                {HOME_LABELS.map(({ id, label, type }) => (
+                                {CATEGORY_TYPES.map((category) => (
                                     <Tag
-                                        key={id}
-                                        text={label}
-                                        type={type}
-                                        style={{ fontSize: ".75rem" }}
+                                        key={category}
+                                        text={category}
+                                        style={{ fontSize: ".75rem", cursor: "pointer" }}
+                                        onClick={() => {
+                                            navigate('/recipes', { state: { filterBy: category } })
+                                        }}
                                     />
                                 ))}
                             </div>
