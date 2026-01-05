@@ -15,10 +15,14 @@ export const generateUsers = async (count = 10) => {
 
         const hashedPassword = bcrypt.hashSync(password, salt)
 
+        const firstname = faker.person.firstName()
+        const lastname = faker.person.lastName()
+        const username = `${faker.helpers.slugify(firstname.toLowerCase())}.${faker.helpers.slugify(lastname.toLowerCase())}`
+
         users.push({
-            username: faker.internet.username(),
-            firstName: faker.person.firstName(),
-            lastName: faker.person.lastName(),
+            username,
+            firstName: firstname,
+            lastName: lastname,
             email: faker.internet.email(),
             hashedPassword,
             role: "user",
