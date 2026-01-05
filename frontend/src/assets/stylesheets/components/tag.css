@@ -6,20 +6,24 @@
     width: max-content;
 }
 
-.tag-blue {
-    background-color: var(--color-tag-blue);
+.tag-default {
+    background-color: var(--color-secondary);
 }
 
-.tag-orange {
-    background-color: var(--color-tag-orange);
+.tag-entrees {
+    background-color: var(--color-tag-entrees);
 }
 
-.tag-green {
-    background-color: var(--color-tag-green);
+.tag-plats {
+    background-color: var(--color-tag-plats);
 }
 
-.tag-brown {
-    background-color: var(--color-tag-brown);
+.tag-desserts {
+    background-color: var(--color-tag-desserts);
+}
+
+.tag-cocktails {
+    background-color: var(--color-tag-cocktails);
 }
 
 .tag-facile {
@@ -28,5 +32,9 @@
 }
 
 .tag-intermediaire {
-    background-color: var(--color-secondary);
+    background-color: var(--color-tag-intermediaire);
+}
+
+.tag-difficile {
+    background-color: var(--color-tag-hard);
 }

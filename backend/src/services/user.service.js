@@ -50,9 +50,29 @@ const getUserFromEmail = async (email) => {
     return user
 }
 
+const updateUser = async (userId, data) => {
+    const { firstName, lastName, password } = data;
+
+    const updateData = { firstName, lastName };
+
+    if (password && password.trim().length > 0) {
+        const salt = bcrypt.genSaltSync(10);
+        updateData.hashedPassword = bcrypt.hashSync(password, salt);
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { $set: updateData },
+        { new: true, runValidators: true }
+    ).select("-hashedPassword") // ne pas retourner le mot de passe haché
+
+    return updatedUser;
+}
+
 export {
     createUser,
     getUserFromId,
     isExistingUser,
     getUserFromEmail,
+    updateUser,
 }

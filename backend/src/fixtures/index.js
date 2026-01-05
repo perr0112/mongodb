@@ -8,6 +8,7 @@ import { User } from "../models/User.js"
 import { generateUsers } from "./users.fixtures.js"
 import { generateCategories } from "./categories.fixtures.js"
 import { generateArticles } from "./articles.fixtures.js"
+import { generateComments } from "./comments.fixtures.js"
 
 const generateFixtures = async () => {
     await connectDB()
@@ -24,6 +25,9 @@ const generateFixtures = async () => {
 
     const articles = await generateArticles(users, categories)
     console.log(`${articles.length} articles ajoutés`)
+
+    const comments = await generateComments(users, articles)
+    console.log(`${comments.length} commentaires ajoutés aux articles`)
 
     process.exit(0)
 }

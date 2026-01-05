@@ -64,7 +64,12 @@
  *           type: boolean
  *           default: false
  *           example: true
- *         category:
+ *         duration:
+ *           type: integer
+ *           minimum: 0
+ *           example: 30
+ *         categories:
+ *           type: array
  *           allOf:
  *             - $ref: "#/components/schemas/MongoId"
  *           nullable: true
@@ -163,10 +168,10 @@
  *         email:
  *           type: string
  *           format: email
- *           example: "admin@example.com"
+ *           example: "admin@lcg-dev.com"
  *         password:
  *           type: string
- *           example: "testpassword"
+ *           example: "admin123"
  *
  *     RegisterRequest:
  *       type: object

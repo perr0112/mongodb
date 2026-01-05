@@ -1,16 +1,16 @@
-export const CATEGORY_TYPES = {
-  entree: "blue",
-  plat: "orange",
-  dessert: "green",
-  cocktail: "brown",
-  facile: "green-light",
-  intermediaire: "orange-light",
-}
+const Tag = ({ text, style, onClick }) => {
+  const getTagType = (label) => {
+        if (!label) return "default"
 
-const Tag = ({ text, type, style, onClick }) => {
+        let type = label.toLowerCase()
+        type = type.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        type = type.replace(/\s+/g, "-")
+
+        return type || "default"
+    }
     return (
         <div
-            className={`tag tag-${type}`}
+            className={`tag tag-${getTagType(text)}`}
             style={style}
             onClick={onClick}
         >

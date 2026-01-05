@@ -7,6 +7,7 @@
     padding: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background-color: var(--color-primary);
+    padding-bottom: 4rem;
 }
 
 .card__image {
@@ -36,16 +37,72 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.25rem;
-    margin-bottom: 2rem;
 }
 
-.card__views {
+.card__info {
+    position: relative;
+}
+
+.card__details {
     position: absolute;
-    bottom: 1rem;
+    left: 1rem;
     right: 1rem;
+    bottom: 1rem;
+    width: calc(100% - 2rem);
+    display: flex;
+    justify-content: space-between;
 }
 
-.card__views p {
+.card__details p {
     font-size: 0.75rem;
     font-weight: 300;
+}
+
+.card__overlay-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.card__rating {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem !important;
+    font-weight: bold !important;
+    margin-bottom: 0.5rem;
+    color: var(--color-accent);
+}
+
+.card__author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.card__author img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author__details {
+    display: flex;
+    flex-direction: column;
+}
+
+.card__author p {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.card__author span {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
 
 import UserContext from "./UserContext"
 
@@ -18,7 +19,7 @@ export const UserProvider = ({ children }) => {
                 if (res.data.success) setUser(res.data.user)
             })
             .catch(err => {
-                if (err.response) console.log("Erreur auth:", err.response.data.message)
+                // if (err.response) console.log("Erreur auth:", err.response.data.message)
                 setUser(null)
             })
             .finally(() => setLoading(false))
@@ -32,6 +33,10 @@ export const UserProvider = ({ children }) => {
     const logout = async () => {
         await apiLogout()
         setUser(null)
+
+        // window.location.reload()
+
+        toast.success("Déconnexion réussie !")
     }
 
     return (
