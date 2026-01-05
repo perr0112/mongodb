@@ -64,7 +64,12 @@
  *           type: boolean
  *           default: false
  *           example: true
- *         category:
+ *         duration:
+ *           type: integer
+ *           minimum: 0
+ *           example: 30
+ *         categories:
+ *           type: array
  *           allOf:
  *             - $ref: "#/components/schemas/MongoId"
  *           nullable: true
