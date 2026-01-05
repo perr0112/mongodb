@@ -30,7 +30,10 @@ const userSchema = new mongoose.Schema(
       default: "user",
     },
     createdAt: { type: Date, default: Date.now() },
-    avatarUrl: String,
+    avatarUrl: {
+      type: String,
+      required: false,
+    },
   },
 );
 
