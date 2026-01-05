@@ -66,6 +66,10 @@ const getArticles = async (queryParams) => {
     if (popularity === "plus_vues") sort = "-views"
     if (popularity === "plus_recentes") sort = "-createdAt"
 
+    if (popularity === "plus_appreciees") {
+        sort = "-rating.average -rating.count"
+    }
+
     const skip = (Number(page) - 1) * Number(limit)
 
     const articles = await Article.find(filters)
