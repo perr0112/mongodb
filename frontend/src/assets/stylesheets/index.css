@@ -18,10 +18,12 @@
 @import "./components/button.css";
 @import "./components/link.css";
 @import "./components/card.css";
+@import "./components/group-radio.css";
 
 /* Pages */
 @import "./pages/authentication.css";
 @import "./pages/home.css";
+@import "./pages/recipes.css";
 
 /* Layout */
 @import "./layout/header.css";
