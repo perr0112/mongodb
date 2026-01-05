@@ -5,7 +5,15 @@ import { HTTPStatus } from "../config/httpStatus.js"
 
 class ArticleController {
     async create(req, res, next) {
-        const { title, content, author } = req.body
+        const {
+            title,
+            content,
+            author,
+            duration,
+            isPublished,
+            categories,
+            coverImage
+        } = req.body
 
         if (!author) {
             return res
@@ -19,15 +27,17 @@ class ArticleController {
                 .json({ message: "Les champs title et content sont requis" })
         }
 
-        const article = await createArticle(title, content, author)
+        try {
+            const article = await createArticle(title, content, author, duration, isPublished, categories, coverImage)
 
-        if (!article) {
+            console.log(article)
+
+            return res.status(HTTPStatus.CREATED).json(article)
+        } catch (error) {
             return res
-                .status(HTTPStatus.BAD_REQUEST)
-                .json({ message: "Erreur lors de la création de l'article" })
+                .status(HTTPStatus.BAD_REQUEST) 
+                .json({ message: error.message || "Erreur lors de la création de l'article" });
         }
-
-        return res.status(HTTPStatus.CREATED).json(article)
     }
 
     async getAll(req, res, next) {
@@ -73,7 +83,7 @@ class ArticleController {
     }
 
     async update(req, res, next) {
-        const { title, content } = req.body
+        const { title, content, categories, isPublished, duration, coverImage } = req.body
         const articleId = req.params.id
 
         if (!title || !content) {
@@ -82,7 +92,7 @@ class ArticleController {
                 .json({ message: "Les champs title et content sont requis" })
         }
 
-        const article = await updateArticle(articleId, title, content)
+        const article = await updateArticle(articleId, title, content, categories, isPublished, duration, coverImage)
 
         if (!article) {
             return res

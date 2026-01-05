@@ -63,12 +63,11 @@ const articleSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    duration: {
+      type: Number,
+      min: 0,
+    },
     isPublished: { type: Boolean, default: false },
-    // category: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "Category",
-    //   // required: true,
-    // },
     categories: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -106,12 +105,8 @@ const commentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Article",
       required: true,
-      index: true,
     },
-    createdAt: { type: Date, default: Date.now() },
-    updatedAt: { type: Date },
   },
-  { timestamps: true }
 );
 
 const Article = mongoose.model("Article", articleSchema);
