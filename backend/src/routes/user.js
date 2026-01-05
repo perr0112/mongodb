@@ -14,4 +14,8 @@ userRouter.get("/:id",
     expressAsyncHandler(userController.getUserById)
 )
 
+userRouter.put("/update",
+    expressAsyncHandler(userController.updateProfile)
+)
+
 export default userRouter
