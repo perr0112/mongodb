@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 import { getArticles } from "../../services"
 
@@ -14,6 +14,7 @@ import Pagination from "../../components/ui/Pagination"
 
 const Recipes = () => {
     const location = useLocation()
+    const navigate = useNavigate()
 
     const [filters, setFilters] = useState({
         search: "",
@@ -113,6 +114,7 @@ const Recipes = () => {
                                     label="Ajouter ma recette"
                                     type="button"
                                     variant="primary"
+                                    onClick={() => navigate("/recipes/create")}
                                 />
 
                                 <Button
@@ -204,6 +206,7 @@ const Recipes = () => {
                                 {data.articles.map((item) => (
                                     <Card
                                         key={item._id}
+                                        className={"card-recipe"}
                                         isLink={true}
                                         author={item.author}
                                         title={item.title}
@@ -213,7 +216,6 @@ const Recipes = () => {
                                         coverImg={item.coverImage}
                                         rating={item.rating.average}
                                         countRatings={item.rating.count}
-                                        style={{ flex: "1 1 calc(33.333% - 1.33rem)" }}
                                     />
                                 ))}
                             </div>
