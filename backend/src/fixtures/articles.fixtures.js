@@ -18,10 +18,10 @@ export const generateArticles = async (users, categories) => {
         DIFFICULTY_CATEGORIES.includes(cat.label)
     )
 
-    const author = users[Math.floor(Math.random() * users.length)]
-
     // Generate real data
     RECIPES.forEach(recipe => {
+        const author = users[Math.floor(Math.random() * users.length)]
+
         const title = recipe.title
         const slug = faker.helpers.slugify(title.toLowerCase())
         const content = recipe.content
@@ -57,6 +57,7 @@ export const generateArticles = async (users, categories) => {
 
     // Generate random data to reach 50 articles
     while (articles.length < 50) {
+        const author = users[Math.floor(Math.random() * users.length)]
         const title = faker.lorem.sentence()
         const slug = faker.helpers.slugify(title.toLowerCase())
         const content = faker.lorem.paragraphs(3 + Math.floor(Math.random() * 5))
