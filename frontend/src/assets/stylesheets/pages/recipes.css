@@ -200,3 +200,21 @@
     font-weight: 500;
     color: var(--color-text);
 }
+
+@media screen and (max-width: 900px) {
+    .recipes-list__cards {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+
+    .card-recipe {
+        width: 100% !important;
+    }
+
+
+    .recipes__container {
+        padding-bottom: 4rem;
+    }
+}

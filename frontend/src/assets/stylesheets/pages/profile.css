@@ -1,0 +1,137 @@
+.profile-layout {
+    position: relative;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.profile__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-right: 1px solid #eee;
+    padding-right: 2rem;
+}
+
+.personal-infos__header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.personal-infos__avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #eee;
+    overflow: hidden;
+}
+
+.personal-infos__avatar img,
+.personal-infos__avatar svg {
+    width: 100%;
+    height: 100%;
+}
+
+.personal-infos__welcome h2 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.personal-infos__date {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.personal-infos__form {
+    display: grid;
+    gap: 1.5rem;
+    max-width: 500px;
+}
+
+.user-recipes__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.recipe-card-mini {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.recipe-card-mini:hover {
+    transform: translateY(-5px);
+}
+
+.recipe-card-mini img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.recipe-card-mini h4 {
+    padding: 1rem;
+    margin: 0;
+}
+
+.card-recipe {
+    width: 100%;
+}
+
+.user-recipes__no-results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    margin-top: 10rem;
+    text-align: center;
+}
+
+.user-recipes__no-results p {
+    font-weight: 800;
+}
+
+@media screen and (max-width: 900px) {
+    .profile-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .profile__sidebar {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .profile__layout .floating-logo {
+        display: none;
+    }
+}
+
+.profile-layout .floating-logo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+}
+
+.profile-layout .floating-logo svg {
+    position: absolute;
+    width: 25% !important;
+    height: auto;
+    bottom: -2rem;
+    left: -2rem;
+}

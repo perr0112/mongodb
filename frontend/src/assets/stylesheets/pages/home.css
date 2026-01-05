@@ -175,6 +175,25 @@ p.home__text--description {
   z-index: 2;
 }
 
+.home_layout .floating-logo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+}
+
+.home__layout .floating-logo svg {
+    display: none;
+    position: absolute;
+    width: 50% !important;
+    height: auto;
+    bottom: -2rem;
+    right: -2rem;
+    transform: scaleX(-1);
+}
+
 @media screen and (max-width: 900px) {
     .floating__content {
         display: none;
@@ -185,10 +204,18 @@ p.home__text--description {
     }
 
     p.home__text--description {
-        font-size: 1.05rem;
+        font-size: .75rem;
     }
 
     .home__text {
         max-width: 80%;
+    }
+
+    .home__text .link {
+        font-size: .75rem !important;
+    }
+
+    .home__layout .floating-logo svg {
+        display: block;
     }
 }
