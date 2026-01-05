@@ -31,15 +31,23 @@ class ArticleController {
     }
 
     async getAll(req, res, next) {
-        const articles = await getArticles()
+        try {
+            const queryParams = req.query
+            const result = await getArticles(queryParams)
 
-        if (!articles) {
+            if (!result.articles.length) {
+                return res
+                    .status(HTTPStatus.NOT_FOUND)
+                    .json({ message: "Aucun article trouvé" })
+            }
+
+            return res.status(HTTPStatus.OK).json(result)
+        } catch (error) {
+            console.error(error)
             return res
                 .status(HTTPStatus.NOT_FOUND)
-                .json({ message: "Aucun article trouvé" })
+                .json({ message: "Erreur lors de la récupération des articles" })
         }
-
-        return res.status(HTTPStatus.OK).json(articles)
     }
 
     async getByUser(req, res, next) {
