@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt"
-import { faker } from "@faker-js/faker"
+// import { faker } from "@faker-js/faker"
+import { fakerFR as faker } from "@faker-js/faker"
 
 import { User } from "../models/User.js"
 
@@ -32,7 +33,8 @@ export const generateUsers = async (count = 10) => {
         hashedPassword: bcrypt.hashSync("admin123", salt),
         firstName: "Walter",
         lastName: "White",
-        role: "admin"
+        role: "admin",
+        avatarUrl: faker.image.avatar()
     })
 
     // Create one regular user
@@ -42,7 +44,8 @@ export const generateUsers = async (count = 10) => {
         hashedPassword: bcrypt.hashSync("user123", salt),
         firstName: "Jessie",
         lastName: "Pinkman",
-        role: "user"
+        role: "user",
+        avatarUrl: faker.image.avatar()
     })
 
     await User.insertMany(users)
