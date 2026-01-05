@@ -57,6 +57,7 @@ const Header = ({ mode = "main" }) => {
 
                                     <Button
                                         label="Ajouter ma recette"
+                                        onClick={() => navigate("/recipes/create")}
                                         type="button"
                                         variant="primary"
                                     />

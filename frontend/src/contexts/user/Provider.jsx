@@ -12,14 +12,9 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         getMe()
             .then(res => {
-                console.log("------------------------")
-                console.log("---------- current user:", res.data.user)
-                console.log("------------------------")
-
                 if (res.data.success) setUser(res.data.user)
             })
             .catch(err => {
-                // if (err.response) console.log("Erreur auth:", err.response.data.message)
                 setUser(null)
             })
             .finally(() => setLoading(false))
@@ -33,8 +28,6 @@ export const UserProvider = ({ children }) => {
     const logout = async () => {
         await apiLogout()
         setUser(null)
-
-        // window.location.reload()
 
         toast.success("Déconnexion réussie !")
     }
