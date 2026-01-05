@@ -35,11 +35,6 @@ class ArticleController {
             const queryParams = req.query
             const result = await getArticles(queryParams)
 
-            if (!result.articles.length) {
-                return res
-                    .status(HTTPStatus.NOT_FOUND)
-                    .json({ message: "Aucun article trouvé" })
-            }
 
             return res.status(HTTPStatus.OK).json(result)
         } catch (error) {
