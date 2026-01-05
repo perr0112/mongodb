@@ -14,7 +14,7 @@ export const login = (email, password) => {
 }
 
 export const logout = () => {
-  return axios.post(`${API_URL}/auth/logout`)
+  return axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true })
 }
 
 export const register = (userData) => {
