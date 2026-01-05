@@ -174,3 +174,21 @@ p.home__text--description {
 .floating__bar {
   z-index: 2;
 }
+
+@media screen and (max-width: 900px) {
+    .floating__content {
+        display: none;
+    }
+
+    p.home__text--highlight {
+        font-size: 1.5rem;
+    }
+
+    p.home__text--description {
+        font-size: 1.05rem;
+    }
+
+    .home__text {
+        max-width: 80%;
+    }
+}
