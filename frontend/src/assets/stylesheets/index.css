@@ -19,6 +19,7 @@
 @import "./components/link.css";
 @import "./components/card.css";
 @import "./components/group-radio.css";
+@import "./components/pagination.css";
 
 /* Pages */
 @import "./pages/authentication.css";
