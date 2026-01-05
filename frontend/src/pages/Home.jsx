@@ -100,13 +100,15 @@ const Home = () => {
                             <p>Catégories disponibles</p>
 
                             <div className="tags__group">
-                                {CATEGORY_TYPES.map((category) => (
+                                {CATEGORY_TYPES.map((tag) => (
                                     <Tag
-                                        key={category}
-                                        text={category}
+                                        key={tag}
+                                        text={tag}
                                         style={{ fontSize: ".75rem", cursor: "pointer" }}
                                         onClick={() => {
-                                            navigate('/recipes', { state: { filterBy: category } })
+                                            navigate('/recipes', { 
+                                                state: { tag: tag }
+                                            })
                                         }}
                                     />
                                 ))}
