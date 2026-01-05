@@ -1,8 +1,10 @@
 import { truncate } from "../../utils/string"
+import { getIdentity } from "../../utils/user"
 import Tag from "../tag/Tag"
 
 const Card = ({
     isLink,
+    className,
     title,
     slug,
     categories,
@@ -24,13 +26,13 @@ const Card = ({
     } = author
 
     return (
-        <div className="card__container" style={style}>
+        <div className={`card__container ${className}`} style={style}>
 
             <div className="card__image">
                 <img src={coverImg} alt={title} />
             </div>
 
-            { isLink && (
+            {isLink && (
                 <a href={`/recipes/${slug}`} className="card__overlay-link"></a>
             )}
 
@@ -52,13 +54,15 @@ const Card = ({
                     ))}
                 </div>
 
-                <div className="card__author">
-                    <img src={avatarUrl} alt={username} />
-                    <div className="author__details">
-                        <p>Écrit par {firstName} {lastName}</p>
-                        <span>@{username}</span>
+                {author && (
+                    <div className="card__author">
+                        <img src={avatarUrl} alt={username} />
+                        <div className="author__details">
+                            <p>Écrit par {getIdentity(author)}</p>
+                            <span>@{username}</span>
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
 
             <div className="card__details">
