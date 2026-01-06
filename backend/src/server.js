@@ -12,7 +12,8 @@ import { connectDB, options } from "./config/database.js"
 import {
   userRouter,
   authRouter,
-  articlesRouter
+  articlesRouter,
+  commentsRouter
  } from "./routes/index.js"
 
 dotenv.config()
@@ -45,6 +46,8 @@ app.use("/auth", authRouter)
 app.use("/users", userRouter)
 // Articles router
 app.use("/articles", articlesRouter)
+// Comments router
+app.use("/comments", commentsRouter)
 
 const specs = swaggerJsdoc(options)
 
