@@ -107,6 +107,7 @@ const commentSchema = new mongoose.Schema(
       required: true,
     },
   },
+  { timestamps: true }
 );
 
 const Article = mongoose.model("Article", articleSchema);

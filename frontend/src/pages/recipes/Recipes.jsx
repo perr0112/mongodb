@@ -11,6 +11,7 @@ import Card from "../../components/ui/Card"
 
 import { FAKE_CARDS_DATA } from "../../constants/cards"
 import Pagination from "../../components/ui/Pagination"
+import { formatValue } from "../../utils/string"
 
 const Recipes = () => {
     const location = useLocation()
@@ -28,11 +29,29 @@ const Recipes = () => {
     const [searchInput, setSearchInput] = useState("")
 
     useEffect(() => {
-        if (location.state?.filterBy) {
-            setFilters((prev) => ({
-                ...prev,
-                ...location.state.filterBy,
-            }))
+        if (location.state?.tag) {
+            const rawTag = location.state.tag
+
+            const formattedValue = formatValue(rawTag)
+
+            const categoryList = ["entrees", "plats", "desserts", "cocktails"]
+            const difficultyList = ["facile", "intermediaire", "difficile"]
+
+            setFilters((prev) => {
+                const newFilters = { ...prev, page: 1 }
+                
+                if (categoryList.includes(formattedValue)) {
+                    newFilters.category = formattedValue
+                } 
+                else if (difficultyList.includes(formattedValue)) {
+                    newFilters.difficulty = formattedValue
+                }
+
+                return newFilters
+            })
+
+            // nettoie l'état pour éviter de réappliquer le filtre lors des rendus suivants
+            window.history.replaceState({}, document.title)
         }
     }, [location.state])
 
@@ -121,6 +140,7 @@ const Recipes = () => {
                                     label="Accéder à mes recettes"
                                     type="button"
                                     variant="secondary"
+                                    onClick={() => navigate("/profile", { state: { activeTab: "recipes" } })}
                                 />
                             </div>
 

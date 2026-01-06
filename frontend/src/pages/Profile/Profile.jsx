@@ -1,5 +1,5 @@
-import { useContext, useState } from "react"
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom";
 
 import UserContext from "../../contexts/user/UserContext";
 import Button from "../../components/ui/button";
@@ -10,6 +10,7 @@ import { MainLogo } from "../../components/icons";
 
 const Profile = () => {
     const [activeTab, setActiveTab] = useState("infos")
+    const location = useLocation()
 
     const { user, logout, loading } = useContext(UserContext)
     const navigate = useNavigate()
@@ -34,6 +35,12 @@ const Profile = () => {
 
         logoutUser()
     }
+
+    useEffect(() => {
+        if (location.state?.activeTab) {
+            setActiveTab(location.state.activeTab)
+        }
+    }, [location.state])
 
     return (
         <div className="profile-layout">

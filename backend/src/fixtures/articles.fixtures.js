@@ -90,7 +90,7 @@ export const generateArticles = async (users, categories) => {
         articles.push(data)
     }
 
-    await Article.insertMany(articles)
+    const articlesGenerated = await Article.insertMany(articles)
 
-    return articles
+    return articlesGenerated
 }

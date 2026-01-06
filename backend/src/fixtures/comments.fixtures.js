@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { Article, Comment } from '../models/Article.js';
 
 export const generateComments = async (users, articles) => {
-    const comments = [];
+    const allComments = [];
     const commentTexts = [
         "Délicieux ! J'ai ajouté un peu plus de sel.",
         "Ma famille a adoré cette recette, merci !",
@@ -14,27 +14,31 @@ export const generateComments = async (users, articles) => {
         "J'ai remplacé le sucre par du miel, c'est top !"
     ];
 
-    for (const article of articles) {
-        const nbComments = Math.floor(Math.random() * 4) + 2
+    articles.forEach((article, index) => {
+        const numberOfComments = faker.number.int({ min: 1, max: 4 });
 
-        for (let i = 0; i < nbComments; i++) {
-            const randomUser = users[Math.floor(Math.random() * users.length)]
+        for (let i = 0; i < numberOfComments; i++) {
+            const randomUser = users[Math.floor(Math.random() * users.length)];
             
-            const comment = new Comment({
-                content: commentTexts[Math.floor(Math.random() * commentTexts.length)],
+            allComments.push({
+                content: faker.helpers.arrayElement(commentTexts),
                 author: randomUser._id,
                 article: article._id,
-                createdAt: faker.date.recent({ days: 10 })
-            })
-
-            const savedComment = await comment.save()
-            comments.push(savedComment)
-
-            await Article.findByIdAndUpdate(article._id, {
-                $push: { comments: savedComment._id }
+                createdAt: faker.date.recent({ days: 30 })
             })
         }
+    })
+
+    const createdComments = await Comment.insertMany(allComments);
+
+    for (const article of articles) {
+        const articleCommentIds = createdComments
+            .filter(c => c.article.toString() === article._id.toString()).map(c => c._id)
+            
+        await Article.findByIdAndUpdate(article._id, {
+            $set: { comments: articleCommentIds }
+        })
     }
 
-    return comments
+    return createdComments
 }
