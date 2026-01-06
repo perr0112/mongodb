@@ -61,9 +61,6 @@ const ArticleForm = ({ initialData, onSubmit, isLoading, isEdit = false }) => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
-
-        console.log("inside handleformsubmit", formData)
-
         onSubmit(formData)
     }
 
