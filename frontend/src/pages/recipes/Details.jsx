@@ -116,10 +116,16 @@ const Details = () => {
                         ))}
                     </div>
 
-                    <Comments
+                    {/* <Comments
                         comments={article.comments} 
                         articleId={article._id} 
                         user={user}
+                    /> */}
+
+                    <Comments 
+                        articleId={article._id} 
+                        recipeAuthorId={article.author._id}
+                        user={user} 
                     />
                 </section>
 

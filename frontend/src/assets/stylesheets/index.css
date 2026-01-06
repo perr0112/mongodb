@@ -21,6 +21,7 @@
 @import "./components/group-radio.css";
 @import "./components/pagination.css";
 @import "./components/modal.css";
+@import "./components/comments.css";
 
 /* Pages */
 @import "./pages/authentication.css";
