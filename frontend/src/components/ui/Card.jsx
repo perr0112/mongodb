@@ -15,8 +15,6 @@ const Card = ({
     style,
     author
 }) => {
-    console.log(author)
-
     const {
         firstName,
         lastName,
@@ -28,9 +26,11 @@ const Card = ({
     return (
         <div className={`card__container ${className}`} style={style}>
 
-            <div className="card__image">
-                <img src={coverImg} alt={title} />
-            </div>
+            {coverImg && (
+                <div className="card__image">
+                    <img src={coverImg} alt={title} />
+                </div>
+            )}
 
             {isLink && (
                 <a href={`/recipes/${slug}`} className="card__overlay-link"></a>

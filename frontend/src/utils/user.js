@@ -5,6 +5,8 @@ const isAdmin = (user) => {
 }
 
 const getIdentity = (user) => {
+    if (!user.lastName) return user.firstName
+
     const { firstName, lastName } = user
 
     return `${firstName} ${lastName}`

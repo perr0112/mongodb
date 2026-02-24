@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 import Login from "./Login"
 import Register from "./Register"
@@ -6,6 +6,7 @@ import Register from "./Register"
 import { MainLogo } from "../../components/icons"
 import Header from "../../components/navbar/header/Header"
 import Tag from "../../components/tag/Tag"
+import { useLocation } from "react-router-dom"
 
 const AUTHENTICATION_LABELS = [
     {
@@ -31,12 +32,18 @@ const AUTHENTICATION_LABELS = [
 ]
 
 const Authentication = ({ modeProvided = "login" }) => {
-
+    const location = useLocation()
     const [mode, setMode] = useState(modeProvided)
 
     const toggleMode = useCallback(() => {
         setMode(mode === "login" ? "register" : "login")
     }, [mode])
+
+    useEffect(() => {
+        if (location.state && location.state.modeProvided) {
+            setMode(location.state.modeProvided)
+        }
+    }, [location.state])
     
     return (
         <div className="authentication__layout">
