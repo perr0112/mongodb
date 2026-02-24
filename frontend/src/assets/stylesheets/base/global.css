@@ -2,4 +2,12 @@ body {
     font-family: "Work-Sans", sans-serif;
     background-color: var(--color-primary);
     color: var(--color-text);
+    height: 100%;
+    overflow: hidden;
+}
+
+body.transition-active {
+    pointer-events: none;
+    height: 100%;
+    overflow: hidden;
 }

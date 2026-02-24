@@ -31,5 +31,9 @@
 @import "./pages/create-recipes.css";
 @import "./pages/profile.css";
 
+/* Features */
+@import "./features/transition.css";
+@import "./features/loader.css";
+
 /* Layout */
 @import "./layout/header.css";
