@@ -1,60 +1,3 @@
-// import gsap from "gsap";
-// import { DrawSVGPlugin, SplitText } from "gsap/all";
-
-// import { $ } from "./dom";
-
-// gsap.registerPlugin(DrawSVGPlugin);
-// gsap.registerPlugin(SplitText);
-
-// const body = document.body
-
-// const loader = () => {
-//   const loaderPage = $(".loader-container");
-//   if (!loaderPage) return;
-
-//   const paths = loaderPage.querySelectorAll("svg path");
-//   const title = loaderPage.querySelector("h1");
-
-//   const tl = gsap.timeline({
-//     defaults: { ease: "expo.out" }
-//   });
-
-//   body.classList.add("transition-active");
-
-//   // init dash
-//   paths.forEach(path => {
-//     const length = path.getTotalLength();
-
-//     gsap.set(path, {
-//       strokeDasharray: length,
-//       strokeDashoffset: length,
-//     });
-//   });
-
-//   // draw
-//   tl.to(paths, {
-//     strokeDashoffset: 0,
-//     duration: 1.4,
-//     stagger: 0.12,
-//   });
-
-//   // texte
-//   if (title) {
-//     const split = SplitText.create(title, { type: "chars" });
-
-//     tl.from(split.chars, {
-//       y: 8,
-//       autoAlpha: 0,
-//       stagger: 0.03,
-//       duration: 0.6,
-//     }, "-=0.8");
-//   }
-// };
-
-// export {
-//     loader,
-// }
-
 import gsap from "gsap";
 import { SplitText } from "gsap/all";
 import { $ } from "./dom";
@@ -87,22 +30,43 @@ const loader = (onComplete) => {
 
   tl.to({}, { duration: 0.4 });
 
-  tl.to(paths, {
-    strokeDashoffset: 0,
-    duration: 1.2,
-    stagger: 0.12,
-  });
+  const lengths = [...paths].map((p) => p.getTotalLength());
+  const maxLen = Math.max(...lengths);
 
-  tl.to(
-    paths,
-    {
-      fill: "var(--color-secondary)",
-      duration: 0.6,
-      stagger: 0.05,
-    },
-    // "-=0.4",
-    "-=1",
-  );
+  paths.forEach((path, i) => {
+    const currentLength = path.getTotalLength();
+
+    let duration;
+
+    if (currentLength > 1500) {
+      duration = 12;
+    } else {
+      const rawRatio = currentLength / maxLen;
+      const finalRatio = gsap.utils.clamp(0.05, 1.2, rawRatio);
+
+      const d = gsap.utils.clamp(0.5, 2.2, 0.6 + Math.sqrt(finalRatio) * 1.6);
+
+      duration = d * 1.2;
+    }
+
+    tl.to(
+      path,
+      {
+        strokeDashoffset: 0,
+        duration,
+      },
+      i * 0.12,
+    ).to(
+      path,
+      {
+        fill: "var(--color-secondary)",
+        // duration: gsap.utils.clamp(0.2, 0.6, 0.25 * duration),
+        duration: currentLength > 1500 ? 2.4 : 1.2 / 2,
+      },
+      // ">",
+      `${duration === 12 ? "-=8.5" : ">"}`,
+    );
+  });
 
   if (title) {
     const split = SplitText.create(title, { type: "chars" });
@@ -114,10 +78,12 @@ const loader = (onComplete) => {
         y: 4,
         autoAlpha: 0,
         stagger: 0.025,
-        duration: 0.6,
+        // duration: 0.6,
+        duration: 1.2,
       },
-      //   "-=2.8",
-      ">",
+      // "+=1.2",
+      // "-=6.2",
+      "-=7.2",
     );
   }
 
@@ -127,26 +93,13 @@ const loader = (onComplete) => {
       autoAlpha: 0,
       duration: 1.2,
       pointerEvents: "none",
-      //   }, "+=0.2");
       onComplete,
     },
-    "+=1.2",
+    // "+=1.2",
+    "-=4",
+    // ">",
   );
 
-  //   tl.fromTo(
-  //     ".app-content",
-  //     {
-  //       autoAlpha: 0,
-  //       pointerEvents: "none",
-  //     },
-  //     {
-  //       autoAlpha: 1,
-  //       pointerEvents: "all",
-  //       duration: 1.2,
-  //     },
-  //     // "-=0.8",
-  //     ">",
-  //   );
   tl.to(
     ".app-content",
     {
