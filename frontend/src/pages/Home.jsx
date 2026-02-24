@@ -1,150 +1,154 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Button from "../components/ui/button"
 import LinkComponent from "../components/ui/Link"
 import Tag from "../components/tag/Tag";
 import Card from "../components/ui/Card";
+import { FaceLogoWithBook, LoopIcon, WhipIcon } from "../components/icons";
 
 import { CATEGORY_TYPES } from "../constants/categories.js";
 import { FAKE_CARDS_DATA } from "../constants/cards.js";
-import MainLogo from "../components/icons/main-logo.jsx";
+
+import Recipes from "./recipes/Recipes.jsx";
+
+import { $, getCoordinates } from "../utils/dom.js";
+import { runPageTransition } from "../utils/transition.js";
+import { initMomentumHoverEffect } from "../utils/momentumHoverEffect.js";
 
 const Home = () => {
     const navigate = useNavigate()
+    const svgToCopy = useRef(null)
+    const svgCopied = useRef(null)
+    const [stylesToApply, setStylesToApply] = useState({})
 
-    const [floatingBarOpen, setFloatingBarOpen] = useState(false)
-    const [loading, setLoading] = useState(false)
-
-    const toggleFloatingBar = () => {
-        setLoading(true)
-        setFloatingBarOpen(!floatingBarOpen)
-
-        setTimeout(() => {
-            setLoading(false)
-        }, 400)
+    const handleClickDiscover = () => {
+        runPageTransition("/recipes", navigate);
     }
 
+    useEffect(() => {
+        initMomentumHoverEffect()
+    })
+
+    useEffect(() => {
+        if (!svgToCopy.current) return;
+
+        const update = () => {
+            // const svgEl = svgToCopy.current.querySelector("svg");
+            // const res = getCoordinates(svgEl);
+            const res = getCoordinates(svgToCopy.current);
+
+            const svgEl2 = svgCopied.current.querySelector("svg");
+            const res2 = getCoordinates(svgEl2);
+
+            setStylesToApply({
+                position: "absolute",
+                left: `${res.left}px`,
+                top: `${res.top}px`,
+                width: `${res.width}px`,
+                height: `${res.height}px`,
+            });
+        };
+
+        update();
+    }, []);
+
     return (
-        <div className="home__layout">
+        <>
+            <div className="home__layout" data-momentum-hover-init>
+                <div className="home__content">
 
-            <div
-                className="floating__content"
-                style={{
-                    pointerEvents: floatingBarOpen ? "auto" : "none",
-                }}
-            >
+                    <div className="home__content-intro">
+                        <LoopIcon className="loop-icon" />
 
-                {floatingBarOpen && (
-                    <div
-                        className="floating__background-overlay"
-                        style={{
-                            backgroundColor: "rgba(0,0,0,0.25)",
-                        }}
-                    />
-                )}
+                        <div className="intro__text">
+                            <div className="intro__titles">
+                                <h1 className="main-title">Des recettes à aimer.</h1>
+                                <h1 className="main-title">Des idées à partager.</h1>
+                            </div>
 
-                <div className="fake__cards">
-                    {
-                        FAKE_CARDS_DATA.map((card, index) => (
-                            <Card
-                                key={index}
-                                isLink={true}
-                                author={card.author}
-                                title={card.title}
-                                slug={card.slug}
-                                categories={card.categories}
-                                views={card.views}
-                                coverImg={card.coverImg}
-                            />
-                        ))
-                    }
-                </div>
+                            <p className="intro__description">
+                                Inspirez-vous, régalez-vous, <br />
+                                partagez votre passion en recettes.
+                            </p>
 
-                <div className="home__svg">
-                    <svg width="1085" height="100%" viewBox="0 0 1085 1117" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.49463 1117C15.1044 925.4 326.54 729.787 793.693 729.787C1260.85 729.787 1040.79 180.733 957.084 0" stroke="#D53232" strokeWidth="5"/>
-                    </svg>
-                </div>
-
-                <div className="floating__bar">
-                    <div
-                        className={`floating__bar-trigger ${floatingBarOpen ? 'open' : ''}`}
-                        onClick={toggleFloatingBar}
-                        style={{
-                            pointerEvents: loading ? "none" : "auto",
-                            borderTopLeftRadius: floatingBarOpen ? '0px' : '40px',
-                            borderTopRightRadius: floatingBarOpen ? '0px' : '40px',
-                            borderBottomLeftRadius: '40px',
-                            borderBottomRightRadius: '40px',
-                        }}
-                    >
-                        <p>De quoi avez vous-envie ?</p>
-
-                        <div className="floating__bar-icon">
-                            <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.14645 2.14645C7.34171 1.95118 7.65829 1.95118 7.85355 2.14645L11.8536 6.14645C12.0488 6.34171 12.0488 6.65829 11.8536 6.85355C11.6583 7.04882 11.3417 7.04882 11.1464 6.85355L8 3.70711L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 3.70711L3.85355 6.85355C3.65829 7.04882 3.34171 7.04882 3.14645 6.85355C2.95118 6.65829 2.95118 6.34171 3.14645 6.14645L7.14645 2.14645Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path></svg>
+                            <div className="intro__actions">
+                                <Button
+                                    label="Découvrir nos recettes"
+                                    type="button"
+                                    variant="secondary"
+                                    onClick={handleClickDiscover}
+                                />
+                            </div>
                         </div>
+
+                        <WhipIcon className="whip-icon" />
+
                     </div>
 
-                    <div className={`floating__bar-content ${floatingBarOpen ? 'open' : ''}`} style={{
-                        height: floatingBarOpen ? '300px' : '0px',
-                        padding: floatingBarOpen ? '2rem' : '0',
-                    }}>
-                        <div
-                            className="floating__bar-content-inner"
-                            style={{
-                                opacity: floatingBarOpen ? 1 : 0,
-                                pointerEvents: floatingBarOpen ? 'auto' : 'none',
-                            }}
-                        >
-                            <p>Catégories disponibles</p>
+                    <div className="home__content-images">
+                        <div className="slider">
+                            <div data-momentum-hover-element>
+                                <img data-momentum-hover-target src="./assets/img/home/slider/1.png" alt="Slider 1" className="slider-image image-1" />
+                            </div>
 
-                            <div className="tags__group">
-                                {CATEGORY_TYPES.map((tag) => (
-                                    <Tag
-                                        key={tag}
-                                        text={tag}
-                                        style={{ fontSize: ".75rem", cursor: "pointer" }}
-                                        onClick={() => {
-                                            navigate('/recipes', { 
-                                                state: { tag: tag }
-                                            })
-                                        }}
+                            <div data-momentum-hover-element>
+                                {/* <img data-momentum-hover-target src="./assets/img/home/slider/3.png" alt="Slider 3" className="slider-image image-3" /> */}
+                                <div data-momentum-hover-target>
+                                    <Card
+                                        className={"card-recipe"}
+                                        style={{ minWidth: "300px" }}
+                                        isLink={false}
+                                        title={FAKE_CARDS_DATA[0].title}
+                                        author={FAKE_CARDS_DATA[0].author}
+                                        categories={FAKE_CARDS_DATA[0].categories}
+                                        views={FAKE_CARDS_DATA[0].views}
+                                        coverImg={FAKE_CARDS_DATA[0].coverImg}
                                     />
-                                ))}
+                                </div>
+                            </div>
+
+                            <div data-momentum-hover-element>
+                                <img data-momentum-hover-target src="./assets/img/home/slider/4.png" alt="Slider 4" className="slider-image image-4" />
+                            </div>
+
+                            <div data-momentum-hover-element>
+                                <img data-momentum-hover-target src="./assets/img/home/slider/2.png" alt="Slider 2" className="slider-image image-2" />
+                            </div>
+                            
+                            <div data-momentum-hover-element>
+                                <img data-momentum-hover-target src="./assets/img/home/slider/3.png" alt="Slider 3" className="slider-image image-3" />
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div className="home__container">
+                    <div
+                        ref={svgToCopy}
+                        className="home__layout__copy-svg home__layout__copy-svg--primary"
+                    >
+                        <FaceLogoWithBook color="#F3EDE5" />
+                    </div>
 
-                <div className="home__text">
-
-                    <p className="home__text--highlight">Trouvez votre prochaine recette <span className="keyword">coup de cœur</span>... ou partagez la <span className="keyword">votre</span>.</p>
-
-                    <p className="home__text--description">Une cuisine gourmande, faite par et pour <br />les <span className="keyword">passionnés</span>.</p>
-
-                    <LinkComponent
-                        type="link"
-                        href="/recipes"
-                        label="Voir les recettes disponibles"
-                        variant="primary"
-                        active
-                        style={{ 
-                            fontWeight: 'bold',
-                            fontSize: '1.25rem',
-                        }}
-                    />
                 </div>
 
+                {/* <div className="home__layout-svg">
+                    <FaceLogoWithBook />
+                </div> */}
             </div>
 
-            <div className="floating-logo">
-                <MainLogo />
+            <Recipes />
+
+            {/* <div ref={svgCopied} className="copy-svg">
+                <FaceLogoWithBook color="#D53232" style={{...stylesToApply}} />
+            </div> */}
+            <div
+                ref={svgCopied}
+                className="copy-svg"
+                style={stylesToApply}
+            >
+                <FaceLogoWithBook color="#D53232" />
             </div>
-        </div>
+        </>
     )
 }
 
