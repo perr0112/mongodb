@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 
 import UserContext from "../../../contexts/user/UserContext"
@@ -8,6 +8,10 @@ import { FaceLogo, HeaderLogo, DefaultAvatar } from "../../icons"
 import LinkComponent from "../../ui/Link"
 import Button from "../../ui/button"
 
+import { $ } from "../../../utils/dom"
+import { runPageTransition } from "../../../utils/transition"
+import { handleNavigate } from "../../../utils/navigate"
+
 const Header = ({ mode = "main" }) => {
     const { user, logout } = useContext(UserContext)
     const location = useLocation()
@@ -16,23 +20,60 @@ const Header = ({ mode = "main" }) => {
     const [menuOpen, setMenuOpen] = useState(false)
 
     const handleAuthNavigation = (mode) => {
+        runPageTransition("/auth", navigate, { modeProvided: mode });
+
         setMenuOpen(false)
-        navigate("/auth", { state: { modeProvided: mode } })
     }
+
+    const [heightNavbar, setHeightNavbar] = useState(0);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const header = $("header");
+        if (header) {
+            setHeightNavbar(header.offsetHeight);
+        }
+    }, [])
+
+    const handleScroll = () => {
+        const scrollTop = window.scrollY;
+
+        if (!heightNavbar) return;
+
+        if (scrollTop > 0) {
+            setIsScrolled(true);
+        } else {
+            setIsScrolled(false);
+        }
+    }
+
+    window.addEventListener("scroll", handleScroll);
 
     // Mode = 'main' | 'authentication'
     return (
-        <header className={`navbar__header ${mode === "main" ? "fixed" : ""}`}>
+        <header
+            className={`
+                navbar__header
+                ${mode === "main" ? "fixed" : ""}
+                ${isScrolled ? "scrolled" : ""}
+            `}
+        >
             {mode === "main" && (
                 <div className="navbar__header-main">
                     <div className="navbar__header-logo">
-                        <Link
-                            to="/"
-                            style={{ display: "flex", alignItems: "center", gap: "1.5rem", textDecoration: "none" }}
+                        <a
+                            onClick={() => handleNavigate("/", navigate)}
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "1.5rem",
+                                textDecoration: "none",
+                                cursor: "pointer",
+                            }}
                         >
                             <HeaderLogo />
                             <h3>Le Carnet Gourmand</h3>
-                        </Link>
+                        </a>
                     </div>
 
                     <div className="navbar__header-actions">
@@ -42,6 +83,7 @@ const Header = ({ mode = "main" }) => {
                                     <LinkComponent
                                         type="link"
                                         href="/"
+                                        onClick={() => handleNavigate("/", navigate)}
                                         active={location.pathname === "/"}
                                         label="Accueil"
                                         variant="secondary"
@@ -49,22 +91,23 @@ const Header = ({ mode = "main" }) => {
 
                                     <LinkComponent
                                         type="link"
-                                        href="/recipes"
-                                        active={location.pathname === "/recipes"}
-                                        label="Recettes disponibles"
+                                        href="/favorites"
+                                        onClick={() => handleNavigate("/favorites", navigate)}
+                                        active={location.pathname === "/favorites"}
+                                        label="Mes favoris"
                                         variant="secondary"
                                     />
 
                                     <Button
                                         label="Ajouter ma recette"
-                                        onClick={() => navigate("/recipes/create")}
+                                        onClick={() => handleNavigate("/recipes/create", navigate)}
                                         type="button"
                                         variant="primary"
                                     />
 
                                     <div
                                         className="navbar__header-user-info"
-                                        onClick={() => navigate("/profile")}
+                                        onClick={() => handleNavigate("/profile", navigate)}
                                     >
                                         {user.avatarUrl ? (
                                             <img
@@ -79,25 +122,18 @@ const Header = ({ mode = "main" }) => {
                                 </>
                             ) : (
                                 <>
-                                    <LinkComponent
-                                        type="link"
-                                        href="/"
-                                        active={location.pathname === "/"}
-                                        label="Accueil"
+                                    <Button
+                                        label="S'inscrire"
+                                        type="button"
                                         variant="secondary"
+                                        onClick={() => handleNavigate("/auth", navigate, { modeProvided: "register" })}
                                     />
-                                    <LinkComponent
-                                        type="link"
-                                        href="/recipes"
-                                        active={location.pathname === "/recipes"}
-                                        label="Recettes disponibles"
-                                        variant="secondary"
-                                    />
+
                                     <Button
                                         label="Se connecter"
                                         type="button"
                                         variant="primary"
-                                        onClick={() => handleAuthNavigation("login")}
+                                        onClick={() => handleNavigate("/auth", navigate, { modeProvided: "login" })}
                                     />
                                 </>
                             )}
